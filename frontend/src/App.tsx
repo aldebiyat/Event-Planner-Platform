@@ -2,14 +2,28 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import EventManager from './components/EventManager';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1976d2',
+    },
+    secondary: {
+      main: '#dc004e',
+    },
+  },
+});
 
 const App: React.FC = () => {
   return (
-    <div className="app">
-      <h1>Event Management App</h1>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <EventManager />
-    </div>
+    </ThemeProvider>
   );
 };
+
 
 export default App;

@@ -3,6 +3,7 @@ import { getEvents, createEvent, updateEvent, deleteEvent } from '../services/ev
 import EventForm from './EventForm';
 import EventList from './EventList';
 import { Event } from '../types/Event';
+import { Box, Container } from '@mui/material';
 
 const EventManager: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -53,14 +54,26 @@ const EventManager: React.FC = () => {
   };
 
   return (
-    <div className="event-manager">
-      <EventForm
-        selectedEvent={selectedEvent}
-        onSubmit={handleCreateOrUpdate}
-        onCancel={handleCancel}
-      />
-      <EventList events={events} onEdit={handleEdit} onDelete={handleDelete} />
-    </div>
+    <Container maxWidth="md">
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 4,
+          marginTop: 4,
+        }}
+      >
+        {/* Event Form Section */}
+        <EventForm
+          selectedEvent={selectedEvent}
+          onSubmit={handleCreateOrUpdate}
+          onCancel={handleCancel}
+        />
+
+        {/* Event List Section */}
+        <EventList events={events} onEdit={handleEdit} onDelete={handleDelete} />
+      </Box>
+    </Container>
   );
 };
 
