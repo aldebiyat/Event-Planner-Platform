@@ -183,3 +183,17 @@ npm test
 ```
 
 Visit http://localhost:3000 to access the application.
+
+##  Challenges Faced
+
+### Deciding Whether userId Is Important
+
+One of the primary challenges was deciding whether to make userId mandatory for events. Initially, the system was designed to link events to specific users, but given the lack of a persistent database in this project, maintaining consistency with user-event relationships was problematic. After evaluating the requirements and constraints of an in-memory implementation, the decision was made to make userId optional and assume that all events in a session belong to a single user.
+
+### In-Memory Data Management
+
+Working with in-memory data presented consistency issues, especially when managing complex relationships between users and events. Ensuring that data integrity was maintained during CRUD operations while adhering to project constraints was a learning experience.
+
+### React Testing Challenges
+
+Ensuring proper tests for components like EventForm and EventList was another area of complexity. Adjusting tests to align with Material-UI’s dynamic rendering and hierarchical structure required tweaks, especially when dealing with labels, placeholders, and button texts.
