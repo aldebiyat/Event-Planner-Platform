@@ -29,6 +29,7 @@ const EventForm: React.FC<EventFormProps> = ({ selectedEvent, onSubmit, onCancel
       setFormData(initialFormState);
       setShowCancel(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedEvent]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
