@@ -121,16 +121,11 @@ src/
 
 ## Future Enhancements
 
-	1.	Database Integration:
-	    •	Use PostgreSQL or MongoDB for persistent storage.
-	2.	User Authentication:
-	    •	Enable multiple users with login functionality.
-	3.	Enhanced Validation:
-	    •	Add more robust validation for fields like unique titles or date constraints.
-	4.	UI Enhancements:
-	    •	Add visual improvements with Material-UI or Tailwind CSS.
-	5.	Documentation:
-	    •	Add Swagger for backend API documentation.
+	1.	Database Integration: Use PostgreSQL or MongoDB for persistent storage.
+	2.	User Authentication: Enable multiple users with login functionality.
+	3.	Enhanced Validation: Add more robust validation for fields like unique titles or date constraints.
+	4.	UI Enhancements: Add visual improvements with Material-UI or Tailwind CSS.
+	5.	Documentation: Add Swagger for backend API documentation.
 
 
 ## Setup Instructions
@@ -184,7 +179,7 @@ npm start
 ```
 5. Run tests
 ``` bash
-	npm test
+npm test
 ```
 
 Visit http://localhost:3000 to access the application.
