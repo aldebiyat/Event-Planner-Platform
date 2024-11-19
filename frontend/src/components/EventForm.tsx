@@ -18,6 +18,7 @@ const EventForm: React.FC<EventFormProps> = ({ selectedEvent, onSubmit, onCancel
   };
 
   const [formData, setFormData] = useState<Omit<Event, 'id'>>(initialFormState);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [showCancel, setShowCancel] = useState(false);
 
   useEffect(() => {
@@ -34,11 +35,36 @@ const EventForm: React.FC<EventFormProps> = ({ selectedEvent, onSubmit, onCancel
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
+    // Clear the error for the field being edited
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
     setShowCancel(true);
+  };
+
+  const validateForm = () => {
+    const newErrors: { [key: string]: string } = {};
+
+    if (!formData.title.trim()) {
+      newErrors.title = 'Title is required.';
+    }
+    if (!formData.date.trim()) {
+      newErrors.date = 'Date is required.';
+    }
+    if (!formData.location.trim()) {
+      newErrors.location = 'Location is required.';
+    }
+    if (formData.userEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.userEmail)) {
+      newErrors.userEmail = 'Please enter a valid email address.';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
     onSubmit(formData);
     setFormData(initialFormState);
     setShowCancel(false);
@@ -46,6 +72,7 @@ const EventForm: React.FC<EventFormProps> = ({ selectedEvent, onSubmit, onCancel
 
   const handleCancelClick = () => {
     setFormData(initialFormState);
+    setErrors({});
     setShowCancel(false);
     onCancel();
   };
@@ -61,8 +88,10 @@ const EventForm: React.FC<EventFormProps> = ({ selectedEvent, onSubmit, onCancel
           label="Title"
           value={formData.title}
           onChange={handleChange}
-          required
+          error={!!errors.title}
+          helperText={errors.title || 'Enter the event title.'}
         />
+
         <TextField
           name="date"
           label="Date"
@@ -70,15 +99,19 @@ const EventForm: React.FC<EventFormProps> = ({ selectedEvent, onSubmit, onCancel
           value={formData.date}
           onChange={handleChange}
           InputLabelProps={{ shrink: true }}
-          required
+          error={!!errors.date}
+          helperText={errors.date || 'Select the event date.'}
         />
+
         <TextField
           name="location"
           label="Location"
           value={formData.location}
           onChange={handleChange}
-          required
+          error={!!errors.location}
+          helperText={errors.location || 'Enter the event location.'}
         />
+
         <TextField
           name="description"
           label="Description"
@@ -86,14 +119,19 @@ const EventForm: React.FC<EventFormProps> = ({ selectedEvent, onSubmit, onCancel
           onChange={handleChange}
           multiline
           rows={4}
+          helperText="Enter additional details (optional)."
         />
+
         <TextField
           name="userEmail"
           label="User Email (Optional)"
           type="email"
           value={formData.userEmail}
           onChange={handleChange}
+          error={!!errors.userEmail}
+          helperText={errors.userEmail || 'Enter a valid email address (optional).'}
         />
+
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Button type="submit" variant="contained" color="primary">
             {selectedEvent ? 'Update Event' : 'Create Event'}
